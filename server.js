@@ -11,7 +11,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 //ROUTES (FILL THIS IN)
-// Create a root route that responds by sending the index.html file from the views directory.
 
 app.get('/', function rootDir(req, res) {
     res.sendFile('./views/index.html', {root: __dirname});
@@ -36,8 +35,38 @@ app.get('/pick-a-number', function(req, res){
 
 app.post('/pick-a-number', function(req, res) {
     targetNumber = parseInt(req.body.number);
-    response.status(418).send('Number updated successfully!');
+    res.status(418).send('Number updated successfully!');
 });
+
+// ARTWORKS
+
+
+var artworks = [
+    {title: "Girl with the pearl earring",
+    artist: "Johannes Vermeer",
+    description: "Classic euro art!"},
+    {title: "BodyPosi",
+    artist: "Feminist Felicia",
+    description: "90's feminism new wave"},
+    {title: "The Kiss",
+    artist: "Klimt" ,
+    description: "Very hot. Very classic."},
+];
+
+app.get('/artworks', function(req,res){
+    res.json(artworks);
+});
+
+app.post('/artworks', function artworksCreate(req, res) {
+  var title = req.body.title;
+  var artist = req.body.artist;
+  var desc = req.body.description;
+  var newArtwork = { title: title, artist: artist, description: desc };
+  artworks.push(newArtwork);
+  res.json(artworks);
+});
+
+
 
 // SERVER START
 app.listen(3000, function(){
